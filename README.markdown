@@ -10,13 +10,13 @@ the environment. The device uses the ethernet chip ENC28J60 with the ATmega88 mi
 
 The structure of the system is shown in Fig. 1.
 
-      (0)         (1)			         (3)		                   (5)
-    Sensors   ------------		    -------------- 		       --------------
-    --------->| ATmega88 |	   (2)	    |	Router   |	 (4)	       | Linux PC   |	
-    <---------| ENC28j60 |<----Ethernet---->| 	         |<----Ethernet------> | (Ubuntu)   |	
-    Outputs   ------------                  --------------		       --------------
+      (0)         (1)                            (3)                                (5)
+    Sensors   ------------                  --------------                     --------------
+    --------->| ATmega88 |        (2)       |   Router   |        (4)          | Linux PC   |
+    <---------| ENC28j60 |<----Ethernet---->|            |<----Ethernet------> | (Ubuntu)   |
+    Outputs   ------------                  --------------                     --------------
 
-Figure 1. The network architecture of the remote server/client control device. In the LAN case 
+Figure 1. Network architecture of the remote server/client control device. In the LAN case 
           the router is not necessary.
 
 
