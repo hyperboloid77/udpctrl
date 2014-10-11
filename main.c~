@@ -12,7 +12,7 @@
 
 /* Modified by Ramunas Girdziusas, December 2010.
    * Simplified the while(1) loop and applied the ADC functions, i.e. 
-   * #include "adc_m88.h", and mostly lines from about 200 to 270. 
+   * #include "adc_m88.h", and mostly lines from 190 to 270. 
 */
 
 #include <avr/io.h>

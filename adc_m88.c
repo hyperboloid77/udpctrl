@@ -30,9 +30,9 @@ void adc88_init(void) {
 
 void adc88_close(void) {
 
-  //Turn off ADC
-  ADCSRA&=~(1<<ADEN);     
-  PRR |= (1<<PRADC);
+   //Turn off ADC
+   ADCSRA&=~(1<<ADEN);     
+   PRR |= (1<<PRADC);
 }
 
 void adc88_select_sensor(uint8_t num) {
@@ -134,87 +134,86 @@ uint16_t adc88_readval(uint8_t num) {
 int8_t adc88_m2t(uint16_t measured_val){
 // Convert the ADC measurements to the temperatures in Celsius
   
-  int8_t display_val;
+   int8_t display_val;
   
-  if(measured_val >550)                           display_val=-5;
-  else if(measured_val >450 && measured_val <=550) display_val=0;
-  else if(measured_val >440 && measured_val <=450) display_val=1;
-  else if(measured_val >430 && measured_val <=440) display_val=2;
-  else if(measured_val >420 && measured_val <=430) display_val=3;
-  else if(measured_val >410 && measured_val <=420) display_val=4;
-  else if(measured_val >400 && measured_val <=410) display_val=5;
-  else if(measured_val >300 && measured_val <=400) display_val=10;
-  else if(measured_val >250 && measured_val <=300) display_val=15;
-  else if(measured_val >210 && measured_val <=250) display_val=20;
-  else if(measured_val >190 && measured_val <=210) display_val=25;
-  else if(measured_val >150 && measured_val <=190) display_val=30;
-  else if(measured_val <=150) display_val=35;
-  else display_val=-127;	
-  return display_val;
+   if(measured_val >550)                           display_val=-5;
+   else if(measured_val >450 && measured_val <=550) display_val=0;
+   else if(measured_val >440 && measured_val <=450) display_val=1;
+   else if(measured_val >430 && measured_val <=440) display_val=2;
+   else if(measured_val >420 && measured_val <=430) display_val=3;
+   else if(measured_val >410 && measured_val <=420) display_val=4;
+   else if(measured_val >400 && measured_val <=410) display_val=5;
+   else if(measured_val >300 && measured_val <=400) display_val=10;
+   else if(measured_val >250 && measured_val <=300) display_val=15;
+   else if(measured_val >210 && measured_val <=250) display_val=20;
+   else if(measured_val >190 && measured_val <=210) display_val=25;
+   else if(measured_val >150 && measured_val <=190) display_val=30;
+   else if(measured_val <=150) display_val=35;
+   else display_val=-127;        
+   return display_val;
 }
 
-void adc88_scan(char *tvalues) {
+void adc88_scan(char *tvalues){
   
-  int8_t ts[4];
-  uint16_t foo;            
+   int8_t ts[4];
+   uint16_t foo;            
   
-  uint16_t i;
-  for(i = 0; i < 4; i++) 
-  {  
-    foo=adc88_readval(i);
-    ts[i]=adc88_m2t(foo);
-    _delay_ms(2);
-  }
-  foo=sprintf(tvalues,"%d, %d, %d, %d\n",ts[0],ts[1],ts[2],ts[3]);
+   uint16_t i;
+   for(i = 0; i < 4; i++) 
+   {  
+      foo=adc88_readval(i);
+      ts[i]=adc88_m2t(foo);
+      _delay_ms(2);
+   }
+   foo=sprintf(tvalues,"%d, %d, %d, %d\n",ts[0],ts[1],ts[2],ts[3]);
 }
 
-void adc88_adjust(uint8_t adjust_flag) {
+void adc88_adjust(uint8_t adjust_flag){
 
-if(adjust_flag){  	
-  uint16_t tvals[4]={0,0,0,0};
-  uint16_t t_on[4]={450,450,450,450};
-  uint16_t t_off[4]={350,350,350,350}; 
+   if(adjust_flag){        
+      uint16_t tvals[4]={0,0,0,0};
+      uint16_t t_on[4]={450,450,450,450};
+      uint16_t t_off[4]={350,350,350,350}; 
 
-  uint8_t term_num;
-  for(term_num = 0; term_num < 3; term_num++){ 
+      uint8_t term_num;
+      for(term_num = 0; term_num < 3; term_num++){ 
+         tvals[term_num]=adc88_readval(term_num);
   
-    tvals[term_num]=adc88_readval(term_num);
-  
-    if(tvals[term_num] > t_on[term_num]){
-      //pins "on"
-      switch (term_num){
-        case 0:     
-          PORTD|= (1<<PD0);
-          break;
-        case 1:     
-          PORTD|= (1<<PD1);
-          break;
-        case 2:     
-          PORTD|= (1<<PD3);
-          break;
-        case 3:     
-          PORTD|= (1<<PD4);
-          break;
+         if(tvals[term_num] > t_on[term_num]){
+         //pins "on"
+            switch (term_num){
+            case 0:     
+               PORTD|= (1<<PD0);
+               break;
+            case 1:     
+               PORTD|= (1<<PD1);
+               break;
+            case 2:     
+               PORTD|= (1<<PD3);
+               break;
+            case 3:     
+               PORTD|= (1<<PD4);
+               break;
+            }
+         }
+         else if (tvals[term_num] < t_off[term_num]){
+            //pins "off"
+            switch (term_num){
+            case 0:     
+               PORTD&=~(1<<PD0);
+               break;
+            case 1:     
+               PORTD&=~(1<<PD1);
+               break;
+            case 2:     
+               PORTD&=~(1<<PD3);
+               break;
+            case 3:     
+               PORTD&=~(1<<PD4);
+               break;
+            }                                
+         }    
+         _delay_ms(2);
       }
-    }
-    else if (tvals[term_num] < t_off[term_num]){
-      //pins "off"
-      switch (term_num){
-        case 0:     
-          PORTD&=~(1<<PD0);
-          break;
-        case 1:     
-          PORTD&=~(1<<PD1);
-          break;
-        case 2:     
-          PORTD&=~(1<<PD3);
-          break;
-        case 3:     
-          PORTD&=~(1<<PD4);
-        break;
-      }                                
-    }    
-    _delay_ms(2);
-  }
-}
+   }
 }

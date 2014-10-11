@@ -118,7 +118,7 @@ This is the project completed by me and Saulius Rakauskas. He assembled the hard
 with the network configuration, while I wrote the code. In essence, this is an adaptation of the work 
 by Guido Socher:
 
-An AVR microcontroller based Ethernet device
+"An AVR microcontroller based Ethernet device"
 
 http://www.linuxfocus.org/~katja/electronics/200606/article06061.shtml
 
