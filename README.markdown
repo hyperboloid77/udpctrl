@@ -1,3 +1,31 @@
+0. Update (From 2021)
+
+This was a communication system implemented as a hobby project in the year 2010. I remember getting over-excited 
+when sending a UDP packet to turn on and off the LED on the board connected to my uncle's PC located on
+the other side of the town, from my home PC's Ubuntu terminal, double checking LED's status on a phone.
+
+The second part was a messy analog-to-digit value calibration/conversion, and I stumbled upon a bug caused 
+by the C language's "switch fall through" semantics (how many people did suffer from this?)
+
+The project looked interesting because of its potential wide applicability, a lot of things could be digitized 
+and shared, one only needs to find a decent technology stack... 
+
+Ten years later none of this matters. Instead of connecting ATmegas to the web, 
+we have now inexpensive special chips which are, in my humble opinion, equally useless, and even less reliable.
+
+So this is an obsolete technology now. On the other hand, it shows how one could make those Ethernet-based 
+ESP-x like chips from classical minimal ATmegas, albeit at a toy/prototype/student project level. This could be interesting, 
+but likely would turn out to be a torture for a newcomer. I myself did not learn much about the inner workings of UDP or 
+Ethernet, truth be told, but there is no doubt that the circuitry and the C libraries used here are somewhat amazing. 
+
+This is the domain for "proofs of concept" so to speak, one can even find folks squeezing some functional TCP-IP substack 
+into 8KB of RAM. This is probably more of an art than science and engineering.
+
+Ten years later we are nowhere close to a simple reliable Ethernet device suitable for IoT. In my opinion, the best candidate 
+at the moment could only be an old/cheap PC or an Android device, something that has enough convergence/stability 
+and eyeballing for bugs. All these other platforms fail at convergence, so many new boards come and go.
+
+
 1. Introduction
 ===============
 
@@ -120,7 +148,7 @@ by Guido Socher:
 
 "An AVR microcontroller based Ethernet device"
 
-http://www.linuxfocus.org/~katja/electronics/200606/article06061.shtml
+http://tuxgraphics.org/electronics/200606/article06061.shtml
 
 We added the analog-to-digit conversion, which resulted in the files adc_m88.c (h), and the adjustments in the 
 files main.c and Makefile.
